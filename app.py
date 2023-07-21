@@ -6,12 +6,12 @@ import openai
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-openai.api_key = "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"
+openai.api_key = "Your openai_api_key"
 # 设置MySQL数据库连接
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'lxmqi663393'
-app.config['MYSQL_DB'] = 'gpt_db'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'Your_db'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
