@@ -1,0 +1,221 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #292b2b;
+  color: #f6f7f9;
+  font-family: Arial, sans-serif;
+}
+
+.topnav {
+  text-align:right;
+}
+
+.count {
+  text-align:left;
+  color: #d3f5e4;
+}
+
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #cccccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 样式化表单输入字段、按钮等 */
+
+#chatbox {
+  background-color: #1e2323;
+  width: 100%;
+  height: 50vh;
+  margin-bottom: 1px;
+  border: 1px solid #374744;
+  font-size: 16px;
+  white-space: pre-wrap;
+  color: rgb(250, 247, 247);
+  overflow-y: scroll;
+}
+#chatbox::before {
+  content: attr(placeholder);
+  display: block;
+  text-align: center;
+  line-height: calc(100% - 2em);
+  color:#403c3c;
+}
+
+#input {
+  text-align: center;
+}
+
+#inputbox {
+  background-color: #232828;
+  border: 1px solid #344944;
+  color: #fff;
+  width: 80%;
+  height: 25px;
+  white-space: pre-wrap;
+}
+
+.ABC {
+  text-align: center;
+}
+
+.OK {
+  text-align: center;
+}
+
+.btn::-moz-focus-inner{
+  border: 0;
+  padding: 12px 30px;
+}
+
+.btnB, .btnC, .btn {
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+  padding: 12px 30px;
+  font-size: 18px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.3)), to(rgba(255,255,255,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -ms-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -o-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+}
+
+.btn{
+  background-color: #57a957;
+  border-color: #57a957;
+}
+
+.btn:hover{
+  background-color: #62c462;
+}
+
+.btn:active{
+  background: #57a957;
+}
+
+.btnB{
+  background-color: #ca3535;
+  border-color: #c43c35;
+}
+
+.btnB:hover{
+  background-color: #ee5f5b;
+}
+
+.btnB:active{
+  background: #c43c35;
+}
+
+.btnC{
+  background-color: #269CE9;
+  border-color: #269CE9;
+}
+
+.btnC:hover{
+  background-color: #70B9E8;
+}
+
+.btnC:active{
+  background: #269CE9;
+}
+
+.btn[disabled], .btn[disabled]:hover, .btn[disabled]:active{
+  border-color: #57A957;
+  background: #57A957;
+  color: #D2FFD2;
+}
+
+.btnB[disabled], .btnB[disabled]:hover, .btnB[disabled]:active{
+  border-color: #C43C35;
+  background: #C43C35;
+  color: #FFD3D3;
+}
+
+.btnC[disabled], .btnC[disabled]:hover, .btnC[disabled]:active{
+  border-color: #269CE9;
+  background: #269CE9;
+  color: #93D5FF;
+}
+
+
+.start,  .restart {
+  background-color: #495858;
+  border: 2px solid #363637;
+  padding: 12px 30px;
+  color: rgb(231, 226, 226);
+  box-shadow: 0px 4px 4px rgba(9, 9, 9, 0.3);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  cursor: pointer;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.3)), to(rgba(255,255,255,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -ms-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: -o-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+  background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+}
+.start:hover {
+  background-color: rgb(70, 68, 68);
+}
+.start:active{
+  background: #65696f;
+}
+  
+.restart:hover {
+  background-color: rgb(70, 68, 68);
+}
+.restart:active{
+  background: #65696f;
+}
+
+#sendbtn {
+  background-color: #57a957;
+  border-color: #57a957;
+}
+
+#logout-button {
+  background-color: #269CE9;
+  border-color: #0995f3;
+}
+
+/* 设置滚动条的颜色 */
+::-webkit-scrollbar {
+  background-color: #6e988a;
+  width: 10px;
+  border: 2px solid #363637;
+}
+
+/* 设置滚动条上下箭头的颜色 */
+::-webkit-scrollbar-button {
+  background-color: #34483e;
+}
+
+/* 设置滚动条轨道的颜色 */
+::-webkit-scrollbar-track {
+  background-color: #819992;
+}
+
+/* 设置滚动条滑块的颜色，上下边圆角 */
+::-webkit-scrollbar-thumb {
+  background-color: #212e28;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+

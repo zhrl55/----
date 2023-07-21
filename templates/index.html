@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat</title>
+  <link rel="stylesheet" type="text/css" href="..\static\styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class="topnav">
+    {% if logged_in %}
+    <p style="display: inline-block;">欢迎，{{ session['username'] }}</p>
+    <button id="logout-button" style="display: inline-block;">登出</button>
+    {% else %}
+    <p>请先登录。</p>
+    <button id="login-button">登录</button>
+    <button id="register-button">注册</button>
+    {% endif %}
+  </div>
+
+  <div class="count">
+    <span>
+      <script>
+        (function () {
+          $.ajax({
+            url: '/stats',  // 后端路由处理这个请求
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+              // 更新得分和回答次数
+              $('#score').text(response.score);
+              $('#number').text(response.number);
+            },
+            error: function (error) {
+              console.log(error);
+            }
+          });
+        })();
+      </script>
+    </span>
+    <p>问答得分: <span id="score"></span></p>
+    <p>问答次数: <span id="number"></span></p>
+  </div>
+
+  <div id="error-message" style="display: block;"></div>
+
+  <div id="login-form-container" class="form-container">
+    <form id="login-form" action="/login" method="POST">
+      <input type="text" name="username" placeholder="用户名">
+      <input type="password" name="password" placeholder="密码">
+      <button type="submit">登录</button>
+    </form>
+  </div>
+
+  <div id="register-form-container" class="form-container">
+    <form id="register-form" action="/register" method="POST">
+      <input type="text" name="username" placeholder="用户名">
+      <input type="password" name="password" placeholder="密码">
+      <button type="submit">注册</button>
+    </form>
+  </div>
+
+  <div id="chatbox">
+    <div id="prompt" style="color: rgb(205, 209, 208);">AI主持的百科知识问答，请注册并登录。点击下方的start开始答题，如果想停止问答，请点击stop...</div>
+  </div>
+
+  <br>
+  <div class="ABC">
+    <button class="btn">A</button>
+    <button class="btn btnB">B</button>
+    <button class="btn btnC">C</button>
+  </div>
+
+  <div class="OK">
+    <button class="start">start</button>
+    <button class="start stop">stop</button>
+  </div>
+
+  <div id="input">
+    <input type="text" id="inputbox" placeholder="有什么想说的...">
+    <button id="sendbtn">发送</button>
+  </div>
+  <script>
+    var loginFormContainer = document.getElementById('login-form-container');
+    var registerFormContainer = document.getElementById('register-form-container');
+
+    loginFormContainer.style.display = 'none';
+    registerFormContainer.style.display = 'none';
+
+    // 使用 jQuery 的 AJAX 方法发送异步请求
+    function updateStats() {
+      $.ajax({
+        url: '/stats',  // 后端路由处理这个请求
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+          // 更新得分和回答次数
+          $('#score').text(response.score);
+          $('#number').text(response.number);
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+    }
+
+    $(document).ready(function () {
+      var messages = [];
+      //清空聊天记录
+      function clearChatbox() {
+        $("#chatbox").html("");
+      }
+      //打字机效果
+      function typeWriter(text, index, callback) {
+        if (index < text.length) {
+          $("#chatbox").append(text[index]);
+          setTimeout(function () {
+            typeWriter(text, index + 1, callback);
+          }, 20); // 设置打字速度，单位为毫秒
+        } else {
+          callback();
+        }
+      }
+
+      function sendMessage(message) {
+        $.post("/send_message", { message: message }, function (data) {
+          updateStats();
+          $("#chatbox").append("<p>AI: </p>");
+          typeWriter(data.response, 0, function () {
+            $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+          });
+        });
+      }
+
+      function clearhistory() {
+        $.post("/clear_history")
+      }
+
+      $("#sendbtn").click(function () {
+        var message = $("#inputbox").val();
+        if (message) {
+          $("#chatbox").append("<p>你: " + message + "</p>");
+          $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+          sendMessage(message);
+          $("#inputbox").val("");
+
+        }
+      });
+
+      $("#login-button").click(function () {
+        loginFormContainer.style.display = 'block';
+      });
+
+      $("#register-button").click(function () {
+        registerFormContainer.style.display = 'block';
+      });
+
+      $("#logout-button").click(function () {
+        $.post("/logout", function (data) {
+          window.location.reload();
+        });
+      });
+
+      $(".btn").click(function () {
+        var message = $(this).text();
+        $("#chatbox").append("<p>你: " + message + "</p>");
+        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+        sendMessage(message);
+
+      });
+
+      $(".start").click(function () {
+        clearhistory()
+        var message = $(this).text();
+        $("#chatbox").append("<p>你: " + message + "</p>");
+        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+        sendMessage(message);
+
+
+      });
+
+      $(".stop").click(function () {
+        var message = $(this).text();
+        $("#chatbox").append("<p>你: " + message + "</p>");
+        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+        sendMessage(message);
+
+      });
+
+      $("#inputbox").keypress(function (e) {
+        if (e.which == 13) {
+          $("#sendbtn").click();
+        }
+      });
+    });
+
+  </script>
+</body>
+
+</html>
